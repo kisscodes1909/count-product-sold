@@ -44,11 +44,9 @@ class count_product {
 	function count_product_output_html() {
 		ob_start();
 		?>
-			<?php if( $this->is_cron_running() ): ?>
 				<div id="product-sold-modal">
 					<h1 id="total-product-sold"><?php echo get_option('hn_total_product_sold'); ?></h1>
 				</div>
-			<?php endif ?>
 		<?php	
 		$html = ob_get_contents();
 		ob_end_clean();
@@ -86,7 +84,7 @@ class count_product {
 
 	function count_product_set_cron() {
 		//The count product sold bettween 7:00 and 15:00. Out of time, we will delete the cron
-		if( current_time('timestamp', 0) > strtotime('7:00:00')  && current_time('timestamp', 0) < strtotime('15:00:00', time()) ) {
+		if( current_time('timestamp', 0) > strtotime('7:00:00')  && current_time('timestamp', 0) < strtotime('23:00:00', time()) ) {
 			if( ! wp_next_scheduled('count_product')) {
 				wp_schedule_event(time(), 'every_90s', 'count_product' );
 			}
